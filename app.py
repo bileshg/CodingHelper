@@ -52,26 +52,32 @@ def execute_query(prompt, language, context):
 
 
 def main():
-    task = st.sidebar.selectbox(
-        "Type of Assistance", (
-            "Explain",
-            "Generate",
-            "Debug",
-            "Answer",
-            "Optimize",
-            "Refactor",
-            "Document"
-        )
-    )
+    st.title("Coding Helper")
 
-    language = st.sidebar.selectbox(
-        "Language", (
-            "Python",
-            "Java",
-            "JavaScript",
-            "SQL"
+    col1, col2 = st.columns(2)
+
+    with col1:
+        task = st.selectbox(
+            "Type of Assistance", (
+                "Explain",
+                "Generate",
+                "Debug",
+                "Answer",
+                "Optimize",
+                "Refactor",
+                "Document"
+            )
         )
-    )
+
+    with col2:
+        language = st.selectbox(
+            "Language", (
+                "Python",
+                "Java",
+                "JavaScript",
+                "SQL"
+            )
+        )
 
     context = st.text_area(
         "Code/Requirements",
