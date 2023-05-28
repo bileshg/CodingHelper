@@ -6,16 +6,16 @@ from langchain.prompts import PromptTemplate
 from prompts import Prompt
 
 os.environ["OPENAI_API_KEY"] = st.secrets["chatgpt-API-key"]
-LLM = OpenAI(model_name='text-davinci-003', temperature=0, max_tokens=2048)
 
 
 def process(task, language, context):
-    template = Prompt[task.upper().replace(" ", "_")].value
+    template, temperature = Prompt[task.upper().replace(" ", "_")].value
     prompt = PromptTemplate(
         input_variables=["language", "context"],
         template=template
     )
-    chain = LLMChain(llm=LLM, prompt=prompt)
+    llm = OpenAI(model_name='text-davinci-003', temperature=temperature, max_tokens=2048)
+    chain = LLMChain(llm=llm, prompt=prompt)
     return chain.run(language=language, context=context)
 
 
@@ -29,10 +29,7 @@ def main():
         st.markdown(
             "- **Explain** code snippets\n"
             "- **Generate** code based on requirements\n"
-            "- **Debug** code snippets\n"
             "- **Answer** programming-related questions\n"
-            "- **Optimize** code snippets\n"
-            "- **Refactor** code snippets\n"
             "- **Document** code snippets"
         )
         st.subheader("Usage")
@@ -50,10 +47,7 @@ def main():
             "Type of Assistance", (
                 "Explain",
                 "Generate",
-                "Debug",
                 "Answer",
-                "Optimize",
-                "Refactor",
                 "Document"
             )
         )
@@ -63,7 +57,19 @@ def main():
             "Language", (
                 "Python",
                 "Java",
-                "JavaScript"
+                "JavaScript",
+                "TypeScript",
+                "C",
+                "C++",
+                "C#",
+                "Go",
+                "Ruby",
+                "Rust",
+                "Haskell",
+                "Scala",
+                "Kotlin",
+                "Swift",
+                "Julia"
             )
         )
 
@@ -75,8 +81,10 @@ def main():
     )
 
     if st.button('Execute'):
-        response = process(task, language, context)
-        st.write(response)
+        response_area = st.empty()
+        with st.spinner('Fetching results...'):
+            response = process(task, language, context)
+        response_area.write(response)
 
 
 if __name__ == '__main__':
