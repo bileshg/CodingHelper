@@ -14,7 +14,7 @@ def process(task, language, context):
         input_variables=["language", "context"],
         template=template
     )
-    llm = OpenAI(model_name='text-davinci-003', temperature=temperature, max_tokens=2048)
+    llm = OpenAI(model_name='gpt-4o', temperature=temperature, max_tokens=2048)
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain.run(language=language, context=context)
 

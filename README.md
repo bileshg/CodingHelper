@@ -18,7 +18,7 @@ This application is designed to assist with a variety of code-related tasks. Bui
     ```
 3. Run the Streamlit app
     ```bash
-    streamlit run main.py
+    streamlit run app.py
     ```
 
 ## Usage
